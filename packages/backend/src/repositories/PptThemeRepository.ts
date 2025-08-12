@@ -39,7 +39,7 @@ export class PptThemeRepository {
 
   async findAll(activeOnly: boolean = true): Promise<PptTheme[]> {
     let query = 'SELECT * FROM ppt_themes';
-    const values = [];
+    const values: any[] = [];
     
     if (activeOnly) {
       query += ' WHERE is_active = true';
@@ -63,8 +63,8 @@ export class PptThemeRepository {
   }
 
   async update(id: string, updateData: UpdatePptThemeData): Promise<PptTheme | null> {
-    const fields = [];
-    const values = [];
+    const fields: string[] = [];
+    const values: any[] = [];
     let paramCount = 1;
 
     Object.entries(updateData).forEach(([key, value]) => {
@@ -123,7 +123,7 @@ export class PptThemeRepository {
   async deleteById(id: string): Promise<boolean> {
     const query = 'DELETE FROM ppt_themes WHERE id = $1';
     const result = await pool.query(query, [id]);
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async getThemeUsageStats(): Promise<Array<{ theme_name: string; usage_count: number }>> {

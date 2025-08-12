@@ -33,7 +33,7 @@ export class UserRepository {
   }
 
   async update(id: string, updateData: UpdateUserData): Promise<User | null> {
-    const fields = [];
+    const fields: string[] = [];
     const values = [];
     let paramCount = 1;
 
@@ -76,7 +76,7 @@ export class UserRepository {
   async deactivate(id: string): Promise<boolean> {
     const query = 'UPDATE users SET is_active = false WHERE id = $1';
     const result = await pool.query(query, [id]);
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async findAll(limit: number = 50, offset: number = 0): Promise<User[]> {

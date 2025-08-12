@@ -39,8 +39,8 @@ export class GenerationHistoryRepository {
   }
 
   async update(id: string, updateData: UpdateGenerationHistoryData): Promise<GenerationHistory | null> {
-    const fields = [];
-    const values = [];
+    const fields: string[] = [];
+    const values: any[] = [];
     let paramCount = 1;
 
     Object.entries(updateData).forEach(([key, value]) => {
@@ -130,6 +130,6 @@ export class GenerationHistoryRepository {
   async deleteById(id: string): Promise<boolean> {
     const query = 'DELETE FROM generation_history WHERE id = $1';
     const result = await pool.query(query, [id]);
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 }
